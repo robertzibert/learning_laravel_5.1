@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('blogs', function () {
     return view('blogs');
 });
+
+Route::get('posts', 'PostsController@index');
+Route::get('posts/create', 'PostsController@create');
+Route::get('posts/{id}', 'PostsController@show');
