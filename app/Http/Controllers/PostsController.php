@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest as PostRequest;
 
 class PostsController extends Controller
 {
@@ -37,12 +38,10 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-         $input = $request->all();
-         $input['published_at'] = Carbon::now();
 
-         Post::create($input);
+         Post::create( $request->all());
 
          return redirect('posts');
     }
@@ -80,7 +79,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
       $post = Post::findOrFail($id);
 
