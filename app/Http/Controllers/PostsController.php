@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,12 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $input = $request->all();
+         $input['published_at'] = Carbon::now();
+
+         Post::create($input);
+
+         return redirect('posts');
     }
 
     /**
