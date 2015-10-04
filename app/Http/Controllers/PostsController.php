@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -39,7 +39,12 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $input = $request->all();
+         $input['published_at'] = Carbon::now();
+
+         Post::create($input);
+
+         return redirect('posts');
     }
 
     /**
@@ -51,7 +56,7 @@ class PostsController extends Controller
     public function show($id)
     {
       $post = Post::findOrFail($id);
-      return view('posts.show', compact($post));
+      return view('posts.show', compact('post'));
     }
 
     /**
@@ -62,7 +67,10 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $post = Post::findOrFail($id);
+
+      return view('posts.edit', compact('post'));
+
     }
 
     /**
@@ -74,7 +82,15 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $post = Post::findOrFail($id);
+
+      $input = $request->all();
+
+      $input['published_at'] = Carbon::now();
+
+      $post->update($input);
+
+      return redirect('posts');
     }
 
     /**
@@ -85,6 +101,10 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $post = Post::findOrFail($id);
+
+      $post->destroy();
+
+      return redirect('posts');
     }
 }
