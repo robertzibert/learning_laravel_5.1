@@ -14,10 +14,16 @@ class CreatePostsTable extends Migration
     {
       Schema::create('posts', function (Blueprint $table) {
           $table->increments('id');
+          $table->integer('user_id')->unsigned();
           $table->string('title');
           $table->text('content');
           $table->timestamps();
           $table->timestamp('published_at');
+
+          $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+
       });
     }
 
@@ -28,6 +34,11 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
+        Schema::table('posts', function (Blueprint $table) {
+          $table->dropForeign(['user_id']);
+          $table->dropColumn('user_id');
+        });
+
         Schema::drop('posts');
     }
 }
