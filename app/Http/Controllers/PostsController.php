@@ -18,7 +18,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-      $posts = Post::all();
+      $posts = Post::latest('published_at')->published()->get();
       return view('posts.index', compact('posts'));
     }
 
@@ -41,7 +41,7 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
 
-         Post::create( $request->all());
+         Post::create( $request->all() );
 
          return redirect('posts');
     }
@@ -55,6 +55,7 @@ class PostsController extends Controller
     public function show($id)
     {
       $post = Post::findOrFail($id);
+      
       return view('posts.show', compact('post'));
     }
 
@@ -84,8 +85,6 @@ class PostsController extends Controller
       $post = Post::findOrFail($id);
 
       $input = $request->all();
-
-      $input['published_at'] = Carbon::now();
 
       $post->update($input);
 
