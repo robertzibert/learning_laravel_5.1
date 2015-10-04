@@ -4,7 +4,7 @@
 	<hr>
 	@foreach($posts as $post)
 		<h2>
-			<a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+			{!! link_to_route('posts.show', $post->title , [$post->id]) !!}
 		</h2>
 		<p class="text-muted">{{$post->content}}</p>
 	@endforeach
