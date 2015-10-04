@@ -89,7 +89,7 @@ class PostsController extends Controller
       $input['published_at'] = Carbon::now();
 
       $post->update($input);
-      
+
       return redirect('posts');
     }
 
@@ -101,6 +101,10 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $post = Post::findOrFail($id);
+
+      $post->destroy();
+
+      return redirect('posts');
     }
 }
