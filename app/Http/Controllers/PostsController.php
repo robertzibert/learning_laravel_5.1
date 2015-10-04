@@ -67,7 +67,10 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $post = Post::findOrFail($id);
+
+      return view('posts.edit', compact('post'));
+
     }
 
     /**
@@ -79,7 +82,15 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $post = Post::findOrFail($id);
+
+      $input = $request->all();
+
+      $input['published_at'] = Carbon::now();
+
+      $post->update($input);
+      
+      return redirect('posts');
     }
 
     /**
