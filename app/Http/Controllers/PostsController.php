@@ -3,14 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+
+//We want to see the current user saving posts
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest as PostRequest;
 
 class PostsController extends Controller
 {
+
+    public function __construct(){
+      $this->middleware('auth', ['only' => 'create']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,9 +50,14 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
 
-         Post::create( $request->all() );
+        $user = Auth::user();
+        $post = New Post($request->all());
 
-         return redirect('posts');
+        //Associating one post with one user
+        // Post->belongsTo User-> associate 
+        $post->user()->associate($user);
+        $post->save();
+        return redirect('posts');
     }
 
     /**
@@ -55,7 +69,7 @@ class PostsController extends Controller
     public function show($id)
     {
       $post = Post::findOrFail($id);
-      
+
       return view('posts.show', compact('post'));
     }
 
