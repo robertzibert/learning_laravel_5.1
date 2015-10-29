@@ -13,8 +13,8 @@
 </div>
 
 <div class="form-group">
-	{!! Form::label('tags') !!}
-	{!! Form::select('tags[]', $tags, $post->tagList() , ['class' => 'form-control', 'multiple']) !!}
+	{!! Form::label('tags_lists', 'Tags:') !!}
+	{!! Form::select('tags[]', $tags, null , ['class' => 'form-control', 'multiple']) !!}
 </div>
 
 

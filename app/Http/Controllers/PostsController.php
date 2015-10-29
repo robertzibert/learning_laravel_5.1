@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use App\User;
 use App\Tag;
+use App\Jobs\PublishPost;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
 //We want to see the current user saving posts
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest as PostRequest;
 
@@ -53,17 +52,9 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
 
-        $user = Auth::user();
+        $job = new PublishPost($request->all(), $request->input('tags'));
 
-        $tags = $request->input('tags');
-
-        $post = New Post($request->all());
-        //Associating one post with one user
-        // Post->belongsTo User-> associate
-        $post->user()->associate($user);
-        $post->save();
-
-        $post->tags()->attach($tags);
+        $this->dispatch($job);
 
         return redirect('posts');
     }
@@ -113,7 +104,7 @@ class PostsController extends Controller
 
       $post->update($input);
 
-      
+
 
       return redirect('posts');
     }

@@ -13,6 +13,16 @@ class Post extends Model
 
     protected $date = ['published_at'];
 
+    /**
+     * Get a tags lists associate with the post
+     */
+    public function getTagsListAttribute(){
+
+      return $this->tags->lists('id')->toArray();
+
+    }
+
+
     public function setPublishedAtAttribute($date){
 
       $this->attributes['published_at'] = Carbon::createFromFormat('Y-m-d', $date);
@@ -41,11 +51,5 @@ class Post extends Model
       return $this->belongsToMany('App\Tag');
     }
 
-    /**
-     * Get a tags lists associate with the post
-     */
-    public function tagList(){
-      return $this->tags->lists('id')->toArray();
-    }
 
 }
