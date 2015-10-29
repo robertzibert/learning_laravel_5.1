@@ -37,4 +37,15 @@ class Post extends Model
 
     }
 
+    public function tags(){
+      return $this->belongsToMany('App\Tag');
+    }
+
+    /**
+     * Get a tags lists associate with the post
+     */
+    public function tagList(){
+      return $this->tags->lists('id')->toArray();
+    }
+
 }

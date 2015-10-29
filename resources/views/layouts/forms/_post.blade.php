@@ -13,5 +13,11 @@
 </div>
 
 <div class="form-group">
+	{!! Form::label('tags') !!}
+	{!! Form::select('tags[]', $tags, $post->tagList() , ['class' => 'form-control', 'multiple']) !!}
+</div>
+
+
+<div class="form-group">
 	{!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
 </div>
