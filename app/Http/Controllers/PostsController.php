@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\User;
+use App\Tag;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -38,7 +40,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-      return view('posts.create');
+      $tags = Tag::lists('name','id');
+      return view('posts.create', compact('tags'));
     }
 
     /**
@@ -51,12 +54,17 @@ class PostsController extends Controller
     {
 
         $user = Auth::user();
-        $post = New Post($request->all());
 
+        $tags = $request->input('tags');
+
+        $post = New Post($request->all());
         //Associating one post with one user
-        // Post->belongsTo User-> associate 
+        // Post->belongsTo User-> associate
         $post->user()->associate($user);
         $post->save();
+
+        $post->tags()->attach($tags);
+
         return redirect('posts');
     }
 
@@ -81,9 +89,12 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
+
+      $tags = Tag::lists('name','id');
+
       $post = Post::findOrFail($id);
 
-      return view('posts.edit', compact('post'));
+      return view('posts.edit', compact('post', 'tags'));
 
     }
 
@@ -101,6 +112,8 @@ class PostsController extends Controller
       $input = $request->all();
 
       $post->update($input);
+
+      
 
       return redirect('posts');
     }
