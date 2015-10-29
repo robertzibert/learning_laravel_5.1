@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
+use Gate;
+
 //We want to see the current user saving posts
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest as PostRequest;
@@ -81,9 +83,15 @@ class PostsController extends Controller
     public function edit($id)
     {
 
+      $post = Post::findOrFail($id);
+
+      if(Gate::denies('update', $post)){
+        abort(404, 'Nope');
+      }
+
       $tags = Tag::lists('name','id');
 
-      $post = Post::findOrFail($id);
+
 
       return view('posts.edit', compact('post', 'tags'));
 
