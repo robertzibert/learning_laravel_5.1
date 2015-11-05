@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use App\Tag;
 use App\Jobs\PublishPost;
 
@@ -19,8 +18,12 @@ use App\Http\Requests\PostRequest as PostRequest;
 class PostsController extends Controller
 {
 
+
     public function __construct(){
+
       $this->middleware('auth', ['only' => 'create']);
+      
+
     }
 
     /**
