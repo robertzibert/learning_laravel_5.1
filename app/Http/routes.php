@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -22,7 +21,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
 Route::get('/', function () {
-    return view('welcome');
+
 });
 
 Route::resource('posts', 'PostsController');
