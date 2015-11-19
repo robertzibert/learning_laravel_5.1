@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\Repositories\PostsRepository as Post;
+use App\Repositories\Criteria\Posts\PublishedByOwner;
+
 use App\Tag;
 use App\Jobs\PublishPost;
 
@@ -19,8 +21,13 @@ use App\Http\Requests\PostRequest as PostRequest;
 class PostsController extends Controller
 {
 
-    public function __construct(){
+    private $post;
+
+    public function __construct(Post $post){
+
       $this->middleware('auth', ['only' => 'create']);
+      $this->post = $post;
+
     }
 
     /**
@@ -30,7 +37,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-      $posts = Post::latest('published_at')->published()->get();
+      $this->post->pushCriteria(new PublishedByOwner());
+      $posts = $this->post->all();
       return view('posts.index', compact('posts'));
     }
 

@@ -4,9 +4,60 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bb65bf52a07be59b31e48accb6c7929",
-    "content-hash": "6c14877ce51446b32b3389fb482a0964",
+    "hash": "3ac7c0bbd100a01b59be13abab36172e",
+    "content-hash": "d6dc3ebee31c43851198946d6577d3ce",
     "packages": [
+        {
+            "name": "bosnadev/repositories",
+            "version": "0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Bosnadev/Repositories.git",
+                "reference": "8595460384c198544c3bcfaf1d70fdf877316ff8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Bosnadev/Repositories/zipball/8595460384c198544c3bcfaf1d70fdf877316ff8",
+                "reference": "8595460384c198544c3bcfaf1d70fdf877316ff8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bosnadev\\Repositories\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mirza Pasic",
+                    "email": "mirza.pasic@edu.fit.ba"
+                },
+                {
+                    "name": "Maarten Paauw",
+                    "email": "maartenpaauw@gmail.com"
+                }
+            ],
+            "description": "Laravel Repositories",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "repositories",
+                "repository"
+            ],
+            "time": "2015-08-19 08:01:07"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "2.0.0",
